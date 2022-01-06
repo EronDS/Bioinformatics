@@ -16,9 +16,6 @@ def BinarySearch(arr:list,n:int) -> bool:
         if arr[m] < n: l = m + 1
     return False
 
-values = [int(i) for i in\
-    '0 -> 1 -> 2 -> 3 -> 4 -> 5'.split(' -> ')]
-values
 
 class Node:
     def __init__(self,value):
