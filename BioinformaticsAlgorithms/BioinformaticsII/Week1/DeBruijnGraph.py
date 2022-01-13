@@ -27,9 +27,22 @@ class DeBruijn:
     def Graph_fromkmers(self,kmers):
         self.kmers = kmers
         k = len(self.kmers[0])
-        k1mers = []
-            
-            
+        for mer in self.kmers:
+            l = mer[:-1]
+            r = mer[1:]
+            if l[1:] == r[:-1]:
+                if l not in self.edges.keys():
+                    self.edges[l] = [] 
+            self.nodes.add(l)
+            self.nodes.add(r)
+            self.edges[l].append(r)
+        file = open('DeBruijnFromKmers.txt','w')
+        file.write('\n'.join([f"{k} -> {','.join(v)}" for k,v in self.edges.items()]))
+        file.close()           
+    def Graph_fromkmers_file(self,file):
+        f = open(file,'r')
+        lines = f.read().splitlines()
+        return self.Graph_fromkmers(lines)
 graph = DeBruijn()
 graph.Graph('AAGATTCTCTAAGA',4)
 graph.Graph_fromfile('dataset_199_6 (7).txt')
@@ -40,3 +53,4 @@ mers = sample.read().splitlines()
 sample.close()
 graph.Graph_fromkmers(mers)
 graph.edges
+graph.Graph_fromkmers_file('dataset_200_8.txt')
