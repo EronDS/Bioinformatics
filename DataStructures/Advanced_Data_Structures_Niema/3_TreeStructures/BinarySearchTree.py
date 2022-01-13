@@ -66,7 +66,41 @@ class BST:
         while node.right:
             node = node.right
         return node.value
-
+    def delete(self,x):
+        if self.value == None:
+            print("Tree is Empty!!!\
+                Delete Operation can't be proceed")
+            return
+        if x < self.value:
+            if self.left:
+                self.left = self.left.delete(x)
+            else:
+                print('x-value not found in tree')
+        if x > self.value:
+            if self.right:
+                self.right = self.right.delete(x)
+            else:
+                print('x-value not found in tree')
+        else: #self.value == x
+            ## 0 child or 1 chiild
+            if self.left == None:
+                new = self.right
+                self = None
+                return new
+            if self.right == None:
+                new = self.left
+                self = None
+                return new
+            ## 2 child - replace with highest from lst
+            ## or lowest from right subtree
+            # lst = Left Subtree, rst = right subtree
+            node = self.left
+            while node.right:
+                node = node.right
+            self.value = node.value
+            self.left = node.left.delete(node.value)
+            return self
+        
 
 bst = BST(10)
 bst.insert(20)
@@ -78,6 +112,8 @@ bst.insert(9)
 bst.insert(7)
 bst.VLR_traversal()
 bst.LRV_traversal()
-bst.LRV_traversal()
+bst.VLR_traversal()
 bst.min()
 bst.max()
+bst.delete(21)
+bst.count()
